@@ -37,6 +37,14 @@ export default function Stats() {
   return (
     <section className="relative overflow-hidden bg-ink py-16 md:py-20" aria-label="Ключевые цифры">
       <div className="dot-grid-light absolute inset-0" aria-hidden="true" />
+      <span
+        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-bright/60 to-transparent"
+        aria-hidden="true"
+      />
+      <span
+        className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-emerald-bright/40 to-transparent"
+        aria-hidden="true"
+      />
       <div className="relative mx-auto grid max-w-wrap grid-cols-2 gap-x-6 gap-y-10 px-4 sm:px-6 md:grid-cols-4">
         {ru.stats.items.map((stat, i) => (
           <motion.div
@@ -47,7 +55,7 @@ export default function Stats() {
             viewport={{ once: true, margin: '-40px' }}
             transition={{ duration: 0.5, delay: i * 0.08 }}
           >
-            <p className="font-display text-4xl font-extrabold text-emerald-bright sm:text-5xl">
+            <p className="stat-glow font-display text-4xl font-extrabold text-emerald-bright sm:text-5xl">
               {'countTo' in stat && stat.countTo ? (
                 <CountUpValue to={stat.countTo} suffix={stat.suffix} />
               ) : (

@@ -32,6 +32,8 @@ export interface Project {
   category: string;
   /** Цвет категории: тёмный, читаемый на светлой плашке */
   categoryHex: string;
+  /** Яркий акцент для тёмного превью-мокапа (как на постерах) */
+  visualHex: string;
   description: string;
   tech: string[];
   github?: string;
@@ -171,6 +173,7 @@ export const ru = {
         name: 'OlympIQ',
         category: 'AI · DASHBOARD',
         categoryHex: '#6D28D9',
+        visualHex: '#8B5CF6',
         description:
           'AI-платформа для подготовки к олимпиадам по программированию. Трекер рейтинга, анализ тем, дорожная карта обучения.',
         tech: ['React', 'AI', 'PostgreSQL'],
@@ -180,6 +183,7 @@ export const ru = {
         name: 'Forum',
         category: 'FULL-STACK · GO',
         categoryHex: '#1D4ED8',
+        visualHex: '#3B82F6',
         description:
           'Полноценный веб-форум на чистом Go — без фреймворков. Регистрация и сессии, посты с категориями, комментарии, лайки/дизлайки, роли модератора и админа, загрузка изображений. Контейнеризация через Docker.',
         tech: ['Go', 'SQLite', 'Docker', 'bcrypt'],
@@ -189,6 +193,7 @@ export const ru = {
         name: 'Sushi Delivery',
         category: 'ИНТЕРНЕТ-МАГАЗИН',
         categoryHex: '#C2410C',
+        visualHex: '#F97316',
         description:
           'Полноценный сайт доставки еды: меню, корзина, категории, поиск и оформление заказа онлайн.',
         tech: ['React', 'Node.js', 'Redis'],
@@ -197,6 +202,7 @@ export const ru = {
         name: 'Marigold',
         category: 'ЛЕНДИНГ',
         categoryHex: '#15803D',
+        visualHex: '#22C55E',
         description:
           'Лендинг для ресторана: бронирование столиков, меню и атмосферный дизайн, который продаёт.',
         tech: ['React', 'Анимации'],

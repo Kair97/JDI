@@ -6,12 +6,31 @@ import { ru } from '@/data/content';
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState('');
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // подсветка пункта меню, соответствующего видимой секции
+  useEffect(() => {
+    const ids = ru.nav.links.map((l) => l.href.slice(1));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActive(`#${entry.target.id}`);
+        }
+      },
+      { rootMargin: '-35% 0px -55% 0px' },
+    );
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -45,9 +64,17 @@ export default function Nav() {
             <li key={link.href}>
               <a
                 href={link.href}
-                className="text-sm font-medium text-slate-body transition-colors hover:text-ink"
+                className={`relative text-sm font-medium transition-colors hover:text-ink ${
+                  active === link.href ? 'text-ink' : 'text-slate-body'
+                }`}
               >
                 {link.label}
+                <span
+                  className={`absolute -bottom-1.5 left-0 h-0.5 rounded-full bg-emerald transition-all duration-300 ${
+                    active === link.href ? 'w-full' : 'w-0'
+                  }`}
+                  aria-hidden="true"
+                />
               </a>
             </li>
           ))}

@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useReducedMotion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { motion, useMotionValue, useReducedMotion, useSpring } from 'framer-motion';
 import { ru } from '@/data/content';
 
 const t = ru.hero.terminal;
@@ -50,8 +50,34 @@ export default function HeroTerminal() {
 
   const doneTyping = typedCount >= t.command.length;
 
+  // лёгкий 3D-наклон за курсором (только desktop, выключен при reduced-motion)
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const rotateX = useSpring(useMotionValue(0), { stiffness: 160, damping: 18 });
+  const rotateY = useSpring(useMotionValue(0), { stiffness: 160, damping: 18 });
+
+  const handleTilt = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (reduce) return;
+    const rect = wrapRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const px = (e.clientX - rect.left) / rect.width - 0.5;
+    const py = (e.clientY - rect.top) / rect.height - 0.5;
+    rotateY.set(px * 10);
+    rotateX.set(-py * 8);
+  };
+
+  const resetTilt = () => {
+    rotateX.set(0);
+    rotateY.set(0);
+  };
+
   return (
-    <div className="w-full max-w-md rounded-card bg-ink shadow-[0_24px_60px_rgba(15,23,42,0.25)] ring-1 ring-white/10">
+    <motion.div
+      ref={wrapRef}
+      onMouseMove={handleTilt}
+      onMouseLeave={resetTilt}
+      style={{ rotateX, rotateY, transformPerspective: 900 }}
+      className="w-full max-w-md rounded-card bg-ink shadow-[0_24px_60px_rgba(15,23,42,0.3),0_0_80px_rgba(34,197,94,0.12)] ring-1 ring-white/10"
+    >
       {/* шапка окна */}
       <div className="flex items-center gap-2 border-b border-white/10 px-5 py-3.5">
         <span className="h-3 w-3 rounded-full bg-[#FF5F57]" aria-hidden="true" />
@@ -92,6 +118,6 @@ export default function HeroTerminal() {
           )}
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 }

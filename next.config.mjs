@@ -1,7 +1,9 @@
 // Сайт публикуется на GitHub Pages: https://kair97.github.io/JDI/
-// Поэтому все пути должны начинаться с /JDI. Если когда-нибудь переедете
-// на свой домен (justdoit.kz и т.п.) — поставьте basePath = ''.
-const basePath = '/JDI';
+// В продакшен-сборке все пути начинаются с /JDI; в режиме `npm run dev`
+// префикс отключён, чтобы сайт открывался на http://localhost:3000/.
+// Если переедете на свой домен (justdoit.kz и т.п.) — поставьте basePath = ''.
+const isDev = process.env.NODE_ENV === 'development';
+const basePath = isDev ? '' : '/JDI';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {

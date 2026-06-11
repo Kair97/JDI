@@ -1,5 +1,7 @@
 import About from '@/components/About';
+import FloatingWhatsApp from '@/components/FloatingWhatsApp';
 import Footer from '@/components/Footer';
+import ScrollProgress from '@/components/ScrollProgress';
 import Guarantee from '@/components/Guarantee';
 import Hero from '@/components/Hero';
 import Nav from '@/components/Nav';
@@ -13,6 +15,7 @@ import TechStack from '@/components/TechStack';
 export default function HomePage() {
   return (
     <>
+      <ScrollProgress />
       <Nav />
       <main>
         <Hero />
@@ -26,6 +29,7 @@ export default function HomePage() {
         <OrderForm />
       </main>
       <Footer />
+      <FloatingWhatsApp />
     </>
   );
 }
