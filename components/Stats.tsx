@@ -8,7 +8,9 @@ function CountUpValue({ to, suffix }: { to: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: '-40px' });
   const reduce = useReducedMotion();
-  const [value, setValue] = useState(reduce ? to : 0);
+  // стартуем с 0 и на сервере, и на клиенте — иначе React ругается
+  // на несовпадение HTML при включённом prefers-reduced-motion
+  const [value, setValue] = useState(0);
 
   useEffect(() => {
     if (!inView || reduce) {

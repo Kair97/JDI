@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { motion, useReducedMotion, useScroll, useSpring } from 'framer-motion';
 
 /** Тонкая полоса прогресса чтения страницы — над шапкой. */
@@ -8,7 +9,12 @@ export default function ScrollProgress() {
   const scaleX = useSpring(scrollYProgress, { stiffness: 140, damping: 28, mass: 0.4 });
   const reduce = useReducedMotion();
 
-  if (reduce) return null;
+  // рендерим только после монтирования: на сервере компонента нет в HTML,
+  // и первый клиентский рендер должен совпасть с этим (иначе hydration error)
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted || reduce) return null;
 
   return (
     <motion.div
